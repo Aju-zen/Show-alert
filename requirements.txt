@@ -3,3 +3,5 @@ opencv-python
 numpy
 pyautogui
 pillow
+python-telegram-bot==20.3
+requests
