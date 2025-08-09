@@ -1,0 +1,379 @@
+<!-- save as join-telegram.html -->
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Join Our Telegram — Neon</title>
+  <meta name="description" content="Neon-themed join page for a Telegram group" />
+  <style>
+    :root{
+      --bg1:#060608;
+      --bg2:#0f0b1a;
+      --neon-cyan: #2fe3ff;
+      --neon-mag: #ff49e0;
+      --neon-blue: #2a9df4;
+      --glass: rgba(255,255,255,0.03);
+      --glass-2: rgba(255,255,255,0.04);
+      --card-radius: 16px;
+      --shadow: 0 6px 30px rgba(0,0,0,0.6);
+    }
+
+    html,body{height:100%;margin:0;font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial;}
+    body{
+      background: radial-gradient(ellipse at 10% 20%, rgba(47,227,255,0.06), transparent 10%),
+                  radial-gradient(ellipse at 90% 80%, rgba(255,73,224,0.04), transparent 15%),
+                  linear-gradient(180deg,var(--bg1) 0%, var(--bg2) 100%);
+      color:#e8f5ff;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+      padding:32px;
+      box-sizing:border-box;
+    }
+
+    /* animated grid lines */
+    .neon-grid {
+      position:fixed;
+      inset:0;
+      background-image:
+        linear-gradient(0deg, rgba(255,255,255,0.02) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px);
+      background-size: 100px 100px, 100px 100px;
+      mix-blend-mode: overlay;
+      pointer-events:none;
+      opacity:0.6;
+      animation: drift 30s linear infinite;
+      z-index:0;
+      filter:blur(6px);
+    }
+    @keyframes drift{from{transform:translateY(0)} to{transform:translateY(-600px)}}
+
+    .container{
+      position:relative;
+      z-index:2;
+      width:100%;
+      max-width:920px;
+      display:grid;
+      grid-template-columns: 1fr 420px;
+      gap:28px;
+      align-items:center;
+      padding:36px;
+    }
+
+    /* card */
+    .card{
+      border-radius:var(--card-radius);
+      background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+      border: 1px solid rgba(255,255,255,0.04);
+      box-shadow: var(--shadow);
+      padding:28px;
+      backdrop-filter: blur(8px) saturate(130%);
+    }
+
+    .left .title{
+      font-size:34px;
+      margin:0 0 8px 0;
+      line-height:1;
+      letter-spacing:0.4px;
+      text-shadow:
+        0 0 18px rgba(47,227,255,0.08),
+        0 0 28px rgba(255,73,224,0.03);
+    }
+    .left .subtitle{
+      margin:6px 0 18px 0;
+      color:rgba(232,245,255,0.8);
+      font-size:14px;
+    }
+
+    .features{
+      display:flex;
+      gap:12px;
+      flex-wrap:wrap;
+    }
+    .pill{
+      display:inline-flex;
+      align-items:center;
+      gap:10px;
+      background: linear-gradient(90deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+      padding:10px 14px;
+      border-radius:12px;
+      border:1px solid rgba(255,255,255,0.03);
+      font-size:13px;
+      color:#dff9ff;
+      box-shadow: 0 6px 18px rgba(0,0,0,0.5);
+    }
+    .pill svg{width:18px;height:18px;filter:drop-shadow(0 2px 8px rgba(0,0,0,0.6));}
+
+    /* right column */
+    .right{
+      display:flex;
+      flex-direction:column;
+      gap:18px;
+      align-items:center;
+      justify-content:center;
+      text-align:center;
+      padding:24px;
+    }
+
+    .neon-btn{
+      display:inline-flex;
+      align-items:center;
+      gap:12px;
+      padding:14px 20px;
+      border-radius:14px;
+      font-weight:600;
+      font-size:16px;
+      cursor:pointer;
+      border: none;
+      outline:none;
+      background: linear-gradient(135deg, rgba(47,227,255,0.12), rgba(42,157,244,0.08));
+      color: #eafcff;
+      box-shadow:
+        0 0 12px rgba(47,227,255,0.12),
+        0 8px 30px rgba(42,157,244,0.06),
+        inset 0 1px 0 rgba(255,255,255,0.02);
+      transition: transform .15s ease, box-shadow .15s ease;
+      position:relative;
+      overflow:visible;
+    }
+    .neon-btn:hover{ transform:translateY(-3px); }
+    .neon-btn:active{ transform:translateY(-1px); }
+
+    /* neon glow outline */
+    .neon-outline{
+      position:absolute;
+      inset:-6px;
+      border-radius:18px;
+      pointer-events:none;
+      background: linear-gradient(90deg, rgba(47,227,255,0.08), rgba(255,73,224,0.06));
+      filter: blur(14px);
+      opacity:0.7;
+    }
+
+    /* small actions row */
+    .actions{
+      display:flex;
+      gap:12px;
+      align-items:center;
+      justify-content:center;
+      margin-top:6px;
+    }
+    .action-ghost{
+      padding:10px 12px;
+      border-radius:10px;
+      border:1px dashed rgba(255,255,255,0.06);
+      background:transparent;
+      color:#cfeeff;
+      font-size:13px;
+      cursor:pointer;
+    }
+    .action-ghost:active{transform:translateY(1px);}
+
+    /* QR card */
+    .qr{
+      width:140px;height:140px;
+      border-radius:12px;
+      background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding:12px;
+      border:1px solid rgba(255,255,255,0.03);
+    }
+    .qr img{width:100%;height:100%;object-fit:contain;border-radius:8px}
+
+    footer{margin-top:12px;font-size:12px;color:rgba(232,245,255,0.7);}
+
+    /* responsive */
+    @media (max-width:880px){
+      .container{grid-template-columns:1fr; gap:18px; padding:18px;}
+      .right{padding:18px;}
+    }
+
+    /* tiny toast */
+    .toast{
+      position:fixed;
+      left:50%;
+      transform:translateX(-50%);
+      bottom:32px;
+      padding:10px 16px;
+      background:linear-gradient(90deg, rgba(0,0,0,0.6), rgba(255,255,255,0.02));
+      border-radius:999px;
+      color:#e8fbff;
+      border:1px solid rgba(255,255,255,0.04);
+      box-shadow:0 8px 30px rgba(0,0,0,0.6);
+      opacity:0;
+      pointer-events:none;
+      transition:opacity .18s ease, transform .18s ease;
+    }
+    .toast.show{opacity:1;transform:translateX(-50%) translateY(-6px);pointer-events:auto;}
+  </style>
+</head>
+<body>
+  <div class="neon-grid" aria-hidden="true"></div>
+
+  <main class="container" role="main">
+    <section class="card left" aria-labelledby="page-title">
+      <h1 id="page-title" class="title">Join the Neon Squad on Telegram</h1>
+      <p class="subtitle">Get instant updates, chat with the community, share ideas — all in a bright neon hub.</p>
+
+      <div class="features" aria-hidden="false">
+        <span class="pill" title="Live chat">
+          <!-- chat icon -->
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+          </svg>
+          Live chat
+        </span>
+
+        <span class="pill" title="Fast updates">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 2l2 7h7l-5.5 4 2 7L12 16l-5.5 4 2-7L3 9h7z"/>
+          </svg>
+          Fast updates
+        </span>
+
+        <span class="pill" title="Community">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M17 21v-2a4 4 0 0 0-4-4H7a4 4 0 0 0-4 4v2"/>
+            <circle cx="9" cy="7" r="4"/>
+            <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
+            <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+          </svg>
+          Community
+        </span>
+      </div>
+
+      <p style="margin-top:18px;color:rgba(232,245,255,0.7);font-size:14px;">
+        Scan the QR or click the big button to open Telegram. We'll try to open the Telegram app (if installed); otherwise the web invite will open.
+      </p>
+    </section>
+
+    <aside class="card right" aria-label="Join controls">
+      <div style="position:relative;width:100%;display:flex;flex-direction:column;align-items:center;">
+        <button id="joinBtn" class="neon-btn" aria-label="Join Telegram group">
+          <span style="width:22px;height:22px;display:inline-block">
+            <!-- simple Telegram plane icon -->
+            <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" style="filter:drop-shadow(0 4px 12px rgba(42,157,244,0.25));">
+              <path d="M22 2L11 13"></path>
+              <path d="M22 2l-7 20-4-9-9-4 20-7z"></path>
+            </svg>
+          </span>
+          Join the Telegram Group
+          <span class="neon-outline" aria-hidden="true"></span>
+        </button>
+
+        <div class="actions" style="margin-top:12px;">
+          <button id="copyBtn" class="action-ghost" title="Copy invite link">Copy link</button>
+          <button id="openWebBtn" class="action-ghost" title="Open in browser">Open web</button>
+        </div>
+
+        <div style="display:flex;gap:16px;align-items:center;margin-top:18px;">
+          <div class="qr" aria-hidden="false" title="Scan to join">
+            <img id="qrImg" alt="QR code to join group" src="" />
+          </div>
+          <div style="text-align:left;">
+            <div style="font-weight:700;font-size:15px;">Scan to join</div>
+            <div style="color:rgba(232,245,255,0.7);font-size:13px;margin-top:6px;">Open your camera or QR scanner to join instantly.</div>
+          </div>
+        </div>
+
+        <footer>Not a fan of QR? Use the button above. Replace the invite link in script to make this page live.</footer>
+      </div>
+    </aside>
+  </main>
+
+  <div id="toast" class="toast" role="status" aria-live="polite">Copied to clipboard</div>
+
+  <script>
+    // ---------- CONFIGURE THIS ----------
+    // Replace with your Telegram group link (public or invite)
+    const GROUP_LINK = "https://t.me/your_group"; // <- REPLACE THIS
+    // ------------------------------------
+
+    const joinBtn = document.getElementById('joinBtn');
+    const copyBtn = document.getElementById('copyBtn');
+    const openWebBtn = document.getElementById('openWebBtn');
+    const qrImg = document.getElementById('qrImg');
+    const toast = document.getElementById('toast');
+
+    // Helper: show toast
+    function showToast(msg = "Done", time = 1800){
+      toast.textContent = msg;
+      toast.classList.add('show');
+      setTimeout(()=> toast.classList.remove('show'), time);
+    }
+
+    // Open intent: try app then fallback to web
+    joinBtn.addEventListener('click', ()=>{
+      // If it's a t.me public username (like https://t.me/username), we can attempt tg://resolve?domain=username
+      try {
+        const url = new URL(GROUP_LINK);
+        const hostname = url.hostname.toLowerCase();
+        if (hostname === 't.me' || hostname.endsWith('telegram.me')) {
+          // extract path
+          const path = url.pathname.replace(/^\/+/,'');
+          const tgIntent = `tg://resolve?domain=${encodeURIComponent(path)}`;
+          // open app intent first
+          window.location.href = tgIntent;
+          // fallback after short delay
+          setTimeout(()=> window.open(GROUP_LINK, '_blank'), 700);
+        } else {
+          // generic link: just open
+          window.open(GROUP_LINK, '_blank');
+        }
+      } catch(e){
+        // if GROUP_LINK isn't a full url, just try open directly
+        window.open(GROUP_LINK, '_blank');
+      }
+    });
+
+    // Copy link
+    copyBtn.addEventListener('click', async ()=>{
+      try {
+        await navigator.clipboard.writeText(GROUP_LINK);
+        showToast('Invite link copied');
+      } catch(err){
+        showToast('Copy failed — select & copy manually');
+      }
+    });
+
+    // Open web explicitly
+    openWebBtn.addEventListener('click', ()=>{
+      window.open(GROUP_LINK, '_blank');
+    });
+
+    // generate QR using a free QR generator service
+    // we create a URL that points to the QR image
+    function setQR(link){
+      // using api.qrserver.com
+      const enc = encodeURIComponent(link);
+      // size 300x300
+      const src = `https://api.qrserver.com/v1/create-qr-code/?data=${enc}&size=300x300&bgcolor=0D0D0D&color=FFFFFF`;
+      qrImg.src = src;
+      qrImg.alt = "QR code for " + link;
+    }
+
+    // initialize
+    (function init(){
+      if (!GROUP_LINK || GROUP_LINK.includes("your_group")){
+        // show placeholder QR
+        setQR("https://t.me/");
+      } else {
+        setQR(GROUP_LINK);
+      }
+
+      // keyboard accessibility: Enter key triggers join
+      joinBtn.addEventListener('keyup', (e)=>{
+        if(e.key === 'Enter' || e.key === ' ') joinBtn.click();
+      });
+
+      // small progressive enhancement: show copy tooltip on hover (mobile ignored)
+      copyBtn.addEventListener('mouseover', ()=> copyBtn.title = 'Copy invite link');
+    })();
+  </script>
+</body>
+</html>
