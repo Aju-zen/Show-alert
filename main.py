@@ -56,8 +56,15 @@ def match_template_multiscale(page_img, target_img_path, threshold=0.9, scales=[
 
 def check_link(url, target_img, scroll=False):
     options = Options()
+    options.add_argument("--headless=new")  # Use new headless mode
+    options.add_argument("--no-sandbox")
+    options.add_argument("--disable-dev-shm-usage")
     options.add_argument("--disable-gpu")
+    options.add_argument("--disable-extensions")
+    options.add_argument("--remote-debugging-port=9222")
+    options.binary_location = "/usr/bin/google-chrome"  # Path on Render
     options.add_argument("--window-size=1200,800")
+
 
     driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=options)
     driver.get(url)
@@ -95,3 +102,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+
